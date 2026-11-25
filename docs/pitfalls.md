@@ -52,3 +52,8 @@ replaced, grep for the old port name across docs, help text and packaging lists 
 never drew its settled cells or grid lines. `verify` stayed green because it replays the logic, not the published page.
 `scripts/exported-names.mjs` keeps every binding (commas count only at depth zero) and `npm test`
 checks it; after regenerating `docs/play/`, open the changed pages and look at them.
+
+**One driver ignored PLAYWRIGHT_PATH.** Four drivers each had a copy of the Playwright lookup, and Dino called
+`require("playwright")` itself, so with Playwright installed outside the repository `record dino` failed with Node's
+"Cannot find module" while the others worked. Every driver loads it with `loadPlaywright()` from `lib/playwright.mjs`,
+and `test/playwright.test.mjs` checks each `games/*/driver.mjs` for it.
